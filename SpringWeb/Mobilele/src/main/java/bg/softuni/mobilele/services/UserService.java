@@ -28,7 +28,7 @@ public class UserService {
 
         var rawPassword = userLoginDto.getPassword();
         var encodedPassword = userOpt.get().getPassword();
-        
+
         if (!passwordEncoder.matches(rawPassword, encodedPassword)) return false;
 
         currentUser.login(userOpt.get());
@@ -50,4 +50,7 @@ public class UserService {
 
     }
 
+    public void logout() {
+        this.currentUser.logout();
+    }
 }

@@ -40,4 +40,10 @@ public class UserController {
         userService.register(userRegisterDto);
         return "redirect:/users/login";
     }
+
+    @GetMapping("/logout")
+    public String logout(){
+        userService.logout();
+        return "redirect:/";
+    }
 }
