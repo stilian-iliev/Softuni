@@ -37,7 +37,7 @@ public class UserService {
 
     public boolean register(UserRegisterDto userRegisterDto) {
         if (userRepository.findByUsername(userRegisterDto.getUsername()).isPresent()) return false;
-//        if (!userRegisterDto.getPassword().equals(userRegisterDto.getRePass())) return false;
+        if (!userRegisterDto.getPassword().equals(userRegisterDto.getRePass())) return false;
 
         User newUser = new User(userRegisterDto.getFirstName(),
                 userRegisterDto.getLastName(),
