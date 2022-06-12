@@ -1,0 +1,30 @@
+<header>
+    <nav class="main-nav">
+        <ul>
+            <li>
+                <a th:href="@{/}">Home</a>
+            </li>
+            <li th:if="${!@currentUser.isLogged()}">
+                <a th:href="@{/login}">Login</a>
+            </li>
+            <li th:if="${!@currentUser.isLogged()}">
+                <a th:href="@{/register}">Register</a>
+            </li>
+            <li>
+                <a th:href="@{/about}">About</a>
+            </li>
+            <li th:if="${@currentUser.isLogged()}">
+                <a th:href="@{/addroute}">Add new route</a>
+            </li>
+            <li th:if="${@currentUser.isLogged()}">
+                <a th:href="@{/profile}">Profile</a>
+            </li>
+            <li th:if="${@currentUser.isLogged()}">
+                <a th:href="@{/admin}">Admin</a>
+            </li>
+            <li th:if="${@currentUser.isLogged()}">
+                <a th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+</header>
