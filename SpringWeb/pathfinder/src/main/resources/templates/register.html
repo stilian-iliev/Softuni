@@ -21,6 +21,7 @@
                     <div class="col-auto">
                         <input
                                th:field="*{username}"
+                               th:errorclass="is-invalid"
                                required minlength="5" maxlength="20"
                                type="text"
                                id="inputUsername"
@@ -41,6 +42,7 @@
                     </div>
                     <div class="col-auto">
                         <input th:field="*{fullName}"
+                               th:errorclass="is-invalid"
                                required minlength="5" maxlength="20"
                                type="text"
                                id="inputFullName"
@@ -57,6 +59,7 @@
                     </div>
                     <div class="col-auto">
                         <input th:field="*{email}"
+                               th:errorclass="is-invalid"
 								required
                                type="email"
                                id="inputEmail"
@@ -72,6 +75,7 @@
                     </div>
                     <div class="col-auto">
                         <input th:field="*{age}" required
+                               th:errorclass="is-invalid"
                                type="number"
                                id="inputAge"
                                class="form-control"
@@ -87,6 +91,7 @@
                     </div>
                     <div class="col-auto">
                         <input th:field="*{password}"
+                               th:errorclass="is-invalid"
                                 required minlength="5" maxlength="20"
                                type="password"
                                id="inputPassword"
@@ -105,6 +110,7 @@
                     </div>
                     <div class="col-auto">
                         <input th:field="*{confirmPassword}"
+                               th:errorclass="is-invalid"
                                 required minlength="5" maxlength="20"
                                type="password"
                                id="inputConfirmPassword"

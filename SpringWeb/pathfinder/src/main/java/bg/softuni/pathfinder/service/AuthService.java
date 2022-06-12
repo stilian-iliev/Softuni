@@ -20,4 +20,8 @@ public class AuthService {
         User user = mapper.map(userRegisterDto, User.class);
         userRepository.save(user);
     }
+
+    public boolean exists(String username) {
+        return userRepository.findByUsername(username).isPresent();
+    }
 }

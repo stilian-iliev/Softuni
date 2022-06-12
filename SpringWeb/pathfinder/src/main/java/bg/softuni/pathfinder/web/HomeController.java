@@ -20,4 +20,9 @@ public class HomeController {
         model.addAttribute("mostCommented", mostCommented);
         return "index";
     }
+
+    @GetMapping("/about")
+    public String about() {
+        return "about";
+    }
 }
