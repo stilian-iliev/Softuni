@@ -1,5 +1,6 @@
 package bg.softuni.pathfinder.web;
 
+import bg.softuni.pathfinder.models.dtos.UserLoginDto;
 import bg.softuni.pathfinder.models.dtos.UserRegisterDto;
 import bg.softuni.pathfinder.service.AuthService;
 import org.springframework.stereotype.Controller;
@@ -20,14 +21,23 @@ public class AuthController {
         this.authService = authService;
     }
 
+    @ModelAttribute
+    public UserLoginDto userLoginDto() {
+        return new UserLoginDto();
+    }
+
     @GetMapping("/login")
     public String getLogin() {
         return "login";
     }
 
     @PostMapping("/login")
-    public String login() {
-        return "redirect:/";
+    public String login(UserLoginDto userLoginDto, RedirectAttributes redirectAttributes) {
+        if (authService.login(userLoginDto)) {
+            return "redirect:/";
+        }
+        redirectAttributes.addFlashAttribute("userLoginDto", userLoginDto);
+        return "redirect:/login";
     }
 
     @ModelAttribute("userRegisterDto")
