@@ -52,7 +52,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public String register(@Valid UserRegisterDto userRegisterDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        //todo register login about and profile
         if (!userRegisterDto.getPassword().equals(userRegisterDto.getConfirmPassword())) {
             bindingResult.addError(new ObjectError("password", "Passwords don't match."));
         }
