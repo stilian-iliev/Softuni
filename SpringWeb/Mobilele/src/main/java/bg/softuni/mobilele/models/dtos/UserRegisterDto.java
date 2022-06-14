@@ -1,24 +1,28 @@
 package bg.softuni.mobilele.models.dtos;
 
-import javax.validation.constraints.NotBlank;
+import bg.softuni.mobilele.models.validation.MatchingFields;
+import bg.softuni.mobilele.models.validation.UniqueUsername;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+@MatchingFields(first = "password", second = "rePass", message="Password must be matching")
 public class UserRegisterDto {
-    @NotEmpty
-    @Size(min = 2, max = 20)
+    @NotEmpty(message = "First name is required.")
+    @Size(min = 2, max = 20, message = "First name must be between 2 and 20 characters.")
     private String firstName;
 
-    @NotEmpty
-    @Size(min = 2, max = 20)
+    @NotEmpty(message = "Last name is required.")
+    @Size(min = 2, max = 20, message = "Last name must be between 2 and 20 characters.")
     private String lastName;
 
-    @NotEmpty
-    @Size(min = 2, max = 20)
+    @NotEmpty(message = "Username is required.")
+    @Size(min = 2, max = 20, message = "Username must be between 2 and 20 characters.")
+    @UniqueUsername(message = "Username is taken.")
     private String username;
 
-    @NotEmpty
-    @Size(min = 8, max = 32)
+    @NotEmpty(message = "Password is required.")
+    @Size(min = 8, max = 32, message = "Password must be between 2 and 20 characters.")
     private String password;
 
     private String rePass;

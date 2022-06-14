@@ -27,9 +27,11 @@
             <label for="username" class="text-white font-weight-bold">Username</label>
             <input id="username" th:field="*{username}" th:errorclass="is-invalid" type="text" min="2" max="20" class="form-control"
                    placeholder="Username"/>
-            <p class="invalid-feedback errors alert alert-danger">
-                Username is required.
+
+            <p class="invalid-feedback errors alert alert-danger" th:each="err : ${#fields.errors('username')}" th:text="${err}">
+                Invalid username.
             </p>
+
         </div>
         <div class="row">
             <div class="form-group col-md-6 mb-3">
@@ -63,9 +65,11 @@
                 <label class="text-center text-white font-weight-bold" for="rePass">Repeat password</label>
                 <input id="rePass" th:field="*{rePass}" th:errorclass="is-invalid" type="password" min="2" max="20" class="form-control"
                        placeholder="Password"/>
-                <p class="invalid-feedback errors alert alert-danger">
-                    Passwords should match.
-                </p>
+
+                    <p class="invalid-feedback errors alert alert-danger" th:each="err : ${#fields.errors('rePass')}" th:text="${err}">
+                        Passwords should match.
+                    </p>
+
             </div>
         </div>
 
