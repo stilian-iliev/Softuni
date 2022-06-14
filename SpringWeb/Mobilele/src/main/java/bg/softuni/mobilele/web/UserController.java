@@ -6,6 +6,7 @@ import bg.softuni.mobilele.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,15 +24,23 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String getLogin() {
+    public String getLogin(Model model) {
+        if (!model.containsAttribute("userLoginDto")){
+            model.addAttribute("userLoginDto", new UserLoginDto());
+        }
         return "auth-login";
     }
 
     @PostMapping("/login")
-    public String login(UserLoginDto userLoginDto) {
+    public String login(UserLoginDto userLoginDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (userService.login(userLoginDto)) {
             return "redirect:/";
         }
+
+//        bindingResult.rejectValue("password", "");
+        bindingResult.addError(new ObjectError("userLoginDto","No such user."));
+        redirectAttributes.addFlashAttribute("userLoginDto", userLoginDto);
+        redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userLoginDto", bindingResult);
         return "redirect:/users/login";
     }
 
