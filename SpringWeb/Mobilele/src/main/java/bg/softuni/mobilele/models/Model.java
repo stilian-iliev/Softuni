@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Model extends BaseEntity{
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
+    @Column
     private Category category;
     private String imageUrl;
     @Column(nullable = false)
