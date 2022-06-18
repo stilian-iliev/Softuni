@@ -9,16 +9,27 @@ import org.springframework.web.context.annotation.SessionScope;
 public class CurrentUser {
     private long id;
 
+    private User user;
     private boolean active;
 
     public void login(User user) {
         this.id = user.getId();
+        this.user = user;
         this.active = true;
     }
 
     public void logout() {
         this.id = 0;
+        this.user = null;
         this.active = false;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public long getId() {
