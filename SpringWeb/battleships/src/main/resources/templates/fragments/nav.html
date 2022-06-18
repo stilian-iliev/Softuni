@@ -5,18 +5,23 @@
         <li class="nav-item active">
           <a class="nav-link" th:href="@{/}">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/login}">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/register}">Register</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/add}">Add Ship</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/logout}">Logout</a>
-        </li>
+        <th:block th:unless="${@currentUser.isActive()}">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/login}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/register}">Register</a>
+          </li>
+        </th:block>
+        <th:block th:if="${@currentUser.isActive()}">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/add}">Add Ship</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/logout}">Logout</a>
+          </li>
+        </th:block>
+
       </ul>
       <a class="nav-link" href="/">
         <img width="50px" src="/images/ufo.png" alt="Ufo image">
