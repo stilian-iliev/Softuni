@@ -3,6 +3,7 @@ package bg.softuni.battleships.web;
 import bg.softuni.battleships.models.Ship;
 import bg.softuni.battleships.models.dtos.ShipAttackDto;
 import bg.softuni.battleships.services.ShipService;
+import bg.softuni.battleships.session.CurrentUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +16,18 @@ import java.util.List;
 @Controller
 public class BattleController {
     private final ShipService shipService;
+    private final CurrentUser currentUser;
 
-    public BattleController(ShipService shipService) {
+    public BattleController(ShipService shipService, CurrentUser currentUser) {
         this.shipService = shipService;
+        this.currentUser = currentUser;
     }
 
     @GetMapping("/home")
     public String getHome() {
+        if (!currentUser.isActive()) {
+            return "redirect:/";
+        }
         return "home";
     }
 

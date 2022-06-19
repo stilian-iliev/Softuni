@@ -3,6 +3,7 @@ package bg.softuni.battleships.web;
 import bg.softuni.battleships.models.dtos.LoginDto;
 import bg.softuni.battleships.models.dtos.UserRegisterDto;
 import bg.softuni.battleships.services.AuthService;
+import bg.softuni.battleships.session.CurrentUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -16,9 +17,11 @@ import javax.validation.Valid;
 @Controller
 public class AuthController {
     private final AuthService authService;
+    private final CurrentUser currentUser;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, CurrentUser currentUser) {
         this.authService = authService;
+        this.currentUser = currentUser;
     }
 
     @ModelAttribute("userRegisterDto")
@@ -28,6 +31,7 @@ public class AuthController {
 
     @GetMapping("/register")
     public String getRegister() {
+        if (currentUser.isActive()) return "redirect:/";
         return "register";
     }
 
@@ -54,6 +58,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String getLogin() {
+        if (currentUser.isActive()) return "redirect:/";
         return "login";
     }
 

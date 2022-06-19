@@ -4,6 +4,7 @@ import bg.softuni.battleships.models.Category;
 import bg.softuni.battleships.models.dtos.AddShipDto;
 import bg.softuni.battleships.reposiotories.CategoryRepository;
 import bg.softuni.battleships.services.ShipService;
+import bg.softuni.battleships.session.CurrentUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +19,12 @@ import java.util.List;
 public class ShipController {
     private CategoryRepository categoryRepository;
     private final ShipService shipService;
+    private final CurrentUser currentUser;
 
-    public ShipController(CategoryRepository categoryRepository, ShipService shipService) {
+    public ShipController(CategoryRepository categoryRepository, ShipService shipService, CurrentUser currentUser) {
         this.categoryRepository = categoryRepository;
         this.shipService = shipService;
+        this.currentUser = currentUser;
     }
 
     @ModelAttribute("addShipDto")
@@ -36,6 +39,7 @@ public class ShipController {
 
     @GetMapping("/add")
     public String getAdd() {
+        if (!currentUser.isActive()) return "redirect:/";
         return "ship-add";
     }
 
@@ -43,8 +47,6 @@ public class ShipController {
     public String add(@Valid AddShipDto addShipDto,
                       BindingResult bindingResult,
                       RedirectAttributes redirectAttributes) {
-        //todo validate ship
-        //todo show errors
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("addShipDto", addShipDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addShipDto", bindingResult);
