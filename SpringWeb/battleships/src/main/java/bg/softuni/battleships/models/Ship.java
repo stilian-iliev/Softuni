@@ -83,4 +83,9 @@ public class Ship {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s -- %d -- %d.", getName(), getHealth(), getPower());
+    }
 }
