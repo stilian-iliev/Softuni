@@ -6,6 +6,8 @@ import bg.softuni.linkedout.repositories.CompanyRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CompanyService {
     private final CompanyRepository companyRepository;
@@ -20,5 +22,9 @@ public class CompanyService {
     public void add(CompanyAddDto companyAddDto) {
         Company company = mapper.map(companyAddDto, Company.class);
         companyRepository.save(company);
+    }
+
+    public List<Company> getAll() {
+        return companyRepository.findAll();
     }
 }
