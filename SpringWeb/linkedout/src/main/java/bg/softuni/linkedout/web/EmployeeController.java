@@ -48,4 +48,12 @@ public class EmployeeController {
         return "redirect:/";
     }
 
+    @GetMapping("/all")
+    public String getAll(Model model) {
+        if (!model.containsAttribute("employees")) {
+            model.addAttribute("employees", employeeService.getAll());
+        }
+        return "employee-all";
+    }
+
 }

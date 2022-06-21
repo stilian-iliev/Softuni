@@ -8,6 +8,7 @@ import bg.softuni.linkedout.repositories.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,5 +29,9 @@ public class EmployeeService {
         if (company.isEmpty()) return;
         employee.setCompany(company.get());
         employeeRepository.save(employee);
+    }
+
+    public List<Employee> getAll() {
+        return employeeRepository.findAll();
     }
 }

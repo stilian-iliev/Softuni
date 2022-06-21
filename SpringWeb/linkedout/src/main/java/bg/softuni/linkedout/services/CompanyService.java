@@ -7,6 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CompanyService {
@@ -26,5 +28,14 @@ public class CompanyService {
 
     public List<Company> getAll() {
         return companyRepository.findAll();
+    }
+
+    public Company getById(UUID companyId) {
+        return companyRepository.getReferenceById(companyId);
+    }
+
+    public void delete(UUID companyId) {
+        Optional<Company> byId = companyRepository.findById(companyId);
+        byId.ifPresent(companyRepository::delete);
     }
 }
