@@ -2,6 +2,7 @@ package bg.softuni.musicdb.services;
 
 
 import bg.softuni.musicdb.models.User;
+import bg.softuni.musicdb.models.dtos.LoginDto;
 import bg.softuni.musicdb.models.dtos.UserRegisterDto;
 import bg.softuni.musicdb.repositories.UserRepository;
 import bg.softuni.musicdb.session.CurrentUser;
@@ -27,15 +28,15 @@ public class AuthService {
         userRepository.save(user);
     }
 
-//    public boolean login(LoginDto loginDto) {
-//        Optional<User> user = userRepository.findByUsername(loginDto.getUsername());
-//        if (user.isEmpty()) return false;
-//        if (!user.get().getPassword().equals(loginDto.getPassword())) return false;
-//        currentUser.login(user.get());
-//        return true;
-//    }
-//
-//    public void logout() {
-//        currentUser.logout();
-//    }
+    public boolean login(LoginDto loginDto) {
+        Optional<User> user = userRepository.findByUsername(loginDto.getUsername());
+        if (user.isEmpty()) return false;
+        if (!user.get().getPassword().equals(loginDto.getPassword())) return false;
+        currentUser.login(user.get());
+        return true;
+    }
+
+    public void logout() {
+        currentUser.logout();
+    }
 }

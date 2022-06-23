@@ -4,18 +4,22 @@
     </a>
     <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
         <ul class="navbar-nav row">
+            <th:block th:unless="${@currentUser.isActive}">
             <li class="nav-item col-md-4">
-                <a class="nav-link text-white active h5" href="/login">Login</a>
+                <a class="nav-link text-white active h5" th:href="@{/login}">Login</a>
             </li>
             <li class="nav-item col-md-4">
-                <a class="nav-link text-white active h5" href="/register">Register</a>
+                <a class="nav-link text-white active h5" th:href="@{/register}">Register</a>
+            </li>
+            </th:block>
+            <th:block th:if="${@currentUser.isActive}">
+            <li class="nav-item col-md-4">
+                <a class="nav-link text-white active h5" th:href="@{/albums/add}">Add Album</a>
             </li>
             <li class="nav-item col-md-4">
-                <a class="nav-link text-white active h5" href="/add">Add Album</a>
+                <a class="nav-link text-white active h5" th:href="@{/logout}">Logout</a>
             </li>
-            <li class="nav-item col-md-4">
-                <a class="nav-link text-white active h5" href="/logout">Logout</a>
-            </li>
+            </th:block>
         </ul>
     </div>
 </nav>

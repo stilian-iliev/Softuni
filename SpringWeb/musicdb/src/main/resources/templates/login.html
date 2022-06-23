@@ -19,18 +19,18 @@
             <img alt="Metallica image" src="/img/metallica.jpg" class="w-50 rounded">
         </div>
         <div class="row g-3 align-items-center">
-            <form action="/" method="POST">
-                <h5 class="text-center text-light form-text bg-danger rounded">User doesn't exists</h5>
+            <form th:action="@{/login}" th:method="POST" th:object="${loginDto}">
+                <h5 class="text-center text-light form-text bg-danger rounded" th:if="${#fields.hasErrors()}">User doesn't exists</h5>
                 <div>
                     <div class="col-auto">
                         <label for="inputUsername" class="col-form-label text-light">Username</label>
                     </div>
                     <div class="col-auto">
-                        <input type="text" name="username" id="inputUsername" class="form-control"
+                        <input type="text" th:field="*{username}" th:errorclass="bg-danger" id="inputUsername" class="form-control"
                                aria-describedby="usernameHelpInline">
                     </div>
                     <div class="col-auto">
-                        <small id="usernameError" class="text-light form-text bg-danger rounded">Length must between 3
+                        <small id="usernameError" th:each="err : ${#fields.errors('username')}" th:text="${err}" class="text-light form-text bg-danger rounded">Length must between 3
                             and 20 characters</small>
                     </div>
                 </div>
@@ -39,11 +39,11 @@
                         <label for="inputPassword" class="col-form-label text-light">Password</label>
                     </div>
                     <div class="col-auto">
-                        <input type="password" name="password" id="inputPassword" class="form-control"
+                        <input type="password" th:field="*{password}" th:errorclass="bg-danger" id="inputPassword" class="form-control"
                                aria-describedby="passwordHelpInline">
                     </div>
                     <div class="col-auto">
-                        <small id="passwordError" class="text-light form-text bg-danger rounded">Length must between 5
+                        <small id="passwordError" th:each="err : ${#fields.errors('password')}" th:text="${err}" class="text-light form-text bg-danger rounded">Length must between 5
                             and 20 characters</small>
                     </div>
                 </div>
