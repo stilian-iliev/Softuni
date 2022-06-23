@@ -37,4 +37,8 @@ public class AlbumService {
         albumRepository.save(album);
 
     }
+
+    public void removeById(long id) {
+        albumRepository.deleteById(id);
+    }
 }

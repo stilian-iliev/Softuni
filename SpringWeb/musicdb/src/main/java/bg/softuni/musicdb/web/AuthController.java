@@ -4,6 +4,7 @@ package bg.softuni.musicdb.web;
 import bg.softuni.musicdb.models.dtos.LoginDto;
 import bg.softuni.musicdb.models.dtos.UserRegisterDto;
 import bg.softuni.musicdb.services.AuthService;
+import bg.softuni.musicdb.session.CurrentUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -17,9 +18,11 @@ import javax.validation.Valid;
 @Controller
 public class AuthController {
     private final AuthService authService;
+    private final CurrentUser currentUser;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, CurrentUser currentUser) {
         this.authService = authService;
+        this.currentUser = currentUser;
     }
 
     @ModelAttribute("userRegisterDto")
@@ -29,6 +32,7 @@ public class AuthController {
 
     @GetMapping("/register")
     public String getRegister() {
+        if (currentUser.isActive()) return "redirect:/";
         return "register";
     }
 
@@ -36,6 +40,7 @@ public class AuthController {
     public String register(@Valid UserRegisterDto userRegisterDto,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes) {
+        if (currentUser.isActive()) return "redirect:/";
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userRegisterDto", userRegisterDto);
@@ -53,6 +58,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String getLogin() {
+        if (currentUser.isActive()) return "redirect:/";
         return "login";
     }
 
@@ -60,6 +66,8 @@ public class AuthController {
     public String login(@Valid LoginDto loginDto,
                         BindingResult bindingResult,
                         RedirectAttributes redirectAttributes) {
+        if (currentUser.isActive()) return "redirect:/";
+
         if (!authService.login(loginDto)) bindingResult.addError(new ObjectError("no such user", "no such user"));
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("loginDto", loginDto);
