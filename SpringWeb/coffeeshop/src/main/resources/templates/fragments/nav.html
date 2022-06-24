@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-info rounded">
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/}">Home</a>
+            </li>
+            <th:block th:unless="${@currentUser.isActive()}">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/login}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/register}">Register</a>
+            </li>
+            </th:block>
+            <th:block th:if="${@currentUser.isActive()}">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/add}">Add Order</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">Logout</a>
+            </li>
+            </th:block>
+        </ul>
+        <img width="50px" src="/images/coffee.png" alt="Coffee image">
+    </div>
+</nav>
