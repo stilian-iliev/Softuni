@@ -1,13 +1,18 @@
 
-import { get, del } from './api.js';
+import { get, del, post } from './api.js';
 
 const tableBody = document.querySelector('tbody');
 const loadBtn = document.querySelector('#loadBooks');
+const form = document.querySelector('form');
 
 loadBtn.addEventListener('click', refreshBooks);
+form.addEventListener('submit', addBook);
 
-async function refreshBooks(e) {
+await refreshBooks();
+
+async function refreshBooks() {
     let books = await get('http://localhost:8080/api/books');
+    tableBody.innerHTML = '';
 
     for (const book of books) {
         const row = document.createElement('tr');
@@ -24,7 +29,10 @@ async function refreshBooks(e) {
 
         let buttons = btns.querySelectorAll('button');
         buttons[0].addEventListener('click', () => console.log('edit'));
-        buttons[1].addEventListener('click', () => del('http://localhost:8080/api/books/'+book.id));
+        buttons[1].addEventListener('click', async () => {
+            await del('http://localhost:8080/api/books/'+book.id);
+            await refreshBooks();
+        });
 
         row.appendChild(title);
         row.appendChild(author);
@@ -33,7 +41,17 @@ async function refreshBooks(e) {
 
         tableBody.appendChild(row);
     }
+}
 
+async function addBook(e) {
+    e.preventDefault();
+    // console.log('ello');
 
-    
+    let book = {};
+    book.title = document.querySelector('#title').value;
+    book.isbn = document.querySelector('#isbn').value;
+    book.authorName = document.querySelector('#author').value;
+
+    await post('http://localhost:8080/api/books', book);
+    await refreshBooks();
 }

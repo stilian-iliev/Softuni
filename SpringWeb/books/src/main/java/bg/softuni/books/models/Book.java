@@ -16,6 +16,15 @@ public class Book {
     @ManyToOne
     private Author author;
 
+    public Book() {
+    }
+
+    public Book(String title, String isbn, Author author) {
+        this.title = title;
+        this.isbn = isbn;
+        this.author = author;
+    }
+
     public Long getId() {
         return id;
     }
