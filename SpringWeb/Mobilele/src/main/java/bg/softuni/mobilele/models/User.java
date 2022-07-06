@@ -1,9 +1,6 @@
 package bg.softuni.mobilele.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +14,7 @@ public class User extends BaseEntity {
     private String firstName;
     private String lastName;
     private boolean isActive;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserRole> role;
     private String imageUrl;
     private LocalDateTime created;
