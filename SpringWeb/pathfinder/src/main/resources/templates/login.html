@@ -12,8 +12,7 @@
 
         <div class="row g-3 align-items-center">
 
-            <form   th:object="${userLoginDto}"
-                    th:action="@{/login}"
+            <form   th:action="@{/login}"
                     th:method="post">
                 <div>
                     <div class="col-auto">
@@ -21,7 +20,7 @@
                     </div>
                     <div class="col-auto">
                         <input type="text"
-                               th:field="*{username}"
+                               name="username"
                                required minlength="4" maxlength="20"
                                id="inputUsername"
                                class="form-control"
@@ -34,7 +33,7 @@
                     </div>
                     <div class="col-auto">
                         <input type="password"
-                               th:field="*{password}"
+                               name="password"
                                required minlength="4" maxlength="20"
                                id="inputPassword" class="form-control"
                                aria-describedby="passwordHelpInline">

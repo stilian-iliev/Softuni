@@ -4,27 +4,32 @@
             <li>
                 <a th:href="@{/}">Home</a>
             </li>
-            <li th:if="${!@currentUser.isLogged()}">
+            <th:block sec:authorize="!isAuthenticated()">
+            <li sec:autho="${!@currentUser.isLogged()}">
                 <a th:href="@{/login}">Login</a>
             </li>
-            <li th:if="${!@currentUser.isLogged()}">
+            <li>
                 <a th:href="@{/register}">Register</a>
             </li>
             <li>
                 <a th:href="@{/about}">About</a>
             </li>
-            <li th:if="${@currentUser.isLogged()}">
+            </th:block>
+
+            <th:block sec:authorize="isAuthenticated()">
+            <li >
                 <a th:href="@{/addroute}">Add new route</a>
             </li>
-            <li th:if="${@currentUser.isLogged()}">
+            <li >
                 <a th:href="@{/profile}">Profile</a>
             </li>
-            <li th:if="${@currentUser.isLogged()}">
+            <li >
                 <a th:href="@{/admin}">Admin</a>
             </li>
-            <li th:if="${@currentUser.isLogged()}">
+            <li >
                 <a th:href="@{/logout}">Logout</a>
             </li>
+            </th:block>
         </ul>
     </nav>
 </header>

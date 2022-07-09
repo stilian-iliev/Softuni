@@ -24,7 +24,7 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     @Enumerated(EnumType.STRING)

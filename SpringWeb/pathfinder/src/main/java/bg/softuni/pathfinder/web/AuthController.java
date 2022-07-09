@@ -21,23 +21,9 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @ModelAttribute
-    public UserLoginDto userLoginDto() {
-        return new UserLoginDto();
-    }
-
     @GetMapping("/login")
     public String getLogin() {
         return "login";
-    }
-
-    @PostMapping("/login")
-    public String login(UserLoginDto userLoginDto, RedirectAttributes redirectAttributes) {
-        if (authService.login(userLoginDto)) {
-            return "redirect:/";
-        }
-        redirectAttributes.addFlashAttribute("userLoginDto", userLoginDto);
-        return "redirect:/login";
     }
 
     @ModelAttribute("userRegisterDto")
