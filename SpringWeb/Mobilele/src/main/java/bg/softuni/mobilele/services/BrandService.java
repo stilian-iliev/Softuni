@@ -20,9 +20,13 @@ public class BrandService {
         this.mapper = new ModelMapper();
     }
 
-    public List<BrandDto> findAllBrands() {
+    public List<BrandDto> findAllBrandsDtos() {
         return brandRepository.findAll().stream()
                 .map(e -> mapper.map(e, BrandDto.class))
                 .collect(Collectors.toList());
+    }
+
+    public List<Brand> findAllBrands() {
+        return brandRepository.findAll();
     }
 }

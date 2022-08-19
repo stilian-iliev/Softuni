@@ -35,7 +35,7 @@ public class OffersController {
 
     @ModelAttribute("brandList")
     public List<BrandDto> brandList() {
-        return brandService.findAllBrands();
+        return brandService.findAllBrandsDtos();
     }
 
     @GetMapping("/add")

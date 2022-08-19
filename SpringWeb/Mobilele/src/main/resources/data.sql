@@ -1,5 +1,5 @@
-insert into roles(id, role) values(1, "USER");
-insert into roles(id, role) values(2, "ADMIN");
+--insert into roles(id, role) values(1, "USER");
+--insert into roles(id, role) values(2, "ADMIN");
 
 INSERT into brands(id, name) values(1, "merc");
 INSERT into brands(id, name) values(2, "bmw");
