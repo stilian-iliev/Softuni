@@ -21,6 +21,7 @@ public class User extends BaseEntity {
     private LocalDateTime modified;
 
     public User() {
+        this.role = new HashSet<>();
     }
 
     public User(String firstName, String lastName, String username, String password) {
@@ -102,5 +103,9 @@ public class User extends BaseEntity {
 
     public void setModified(LocalDateTime modified) {
         this.modified = modified;
+    }
+
+    public void addRole(UserRole userRole) {
+        role.add(userRole);
     }
 }

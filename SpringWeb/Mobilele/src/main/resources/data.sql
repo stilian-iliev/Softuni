@@ -1,4 +1,5 @@
-INSERT into users(id, username, first_name, last_name, password) values(1, "stili","stili", "stili", "asdfasdf");
+insert into roles(id, role) values(1, "USER");
+insert into roles(id, role) values(2, "ADMIN");
 
 INSERT into brands(id, name) values(1, "merc");
 INSERT into brands(id, name) values(2, "bmw");
