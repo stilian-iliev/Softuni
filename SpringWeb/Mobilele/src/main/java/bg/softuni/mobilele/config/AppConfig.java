@@ -26,7 +26,9 @@ public class AppConfig {
         http
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers("/", "/login", "/register").permitAll()
+                .antMatchers("/login", "/register").anonymous()
+                .antMatchers("/offers/add").authenticated()
+                .antMatchers("/", "/offers/**", "/brands/all").permitAll()
                 .antMatchers("/admin").hasRole(Role.ADMIN.name())
                 .anyRequest()
                 .authenticated()
