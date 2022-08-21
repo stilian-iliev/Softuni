@@ -19,6 +19,9 @@
     <form   th:action="@{/login}"
             th:method="post"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+        <p class="errors alert alert-danger" th:if="${badCredentials}">
+            Invalid username or password.
+        </p>
         <div class="form-group">
             <label for="username" class="text-white font-weight-bold">Username</label>
             <input value="username" id="username" name="username" type="text" min="2" max="50"

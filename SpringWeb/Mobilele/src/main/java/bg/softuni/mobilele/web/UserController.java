@@ -32,15 +32,21 @@ public class UserController {
         return "auth-register";
     }
 
+    @PostMapping("/login-error")
+    public String loginError(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("badCredentials", true);
+        return "redirect:/login";
+    }
+
     @PostMapping("/register")
     public String register(@Valid UserRegisterDto userRegisterDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("registerModel", userRegisterDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerModel", bindingResult);
-            return "redirect:/users/register";
+            return "redirect:/register";
         }
         userService.register(userRegisterDto);
-        return "redirect:/users/login";
+        return "redirect:/login";
     }
 
 }

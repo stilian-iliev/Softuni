@@ -1,5 +1,6 @@
 package bg.softuni.mobilele.config;
 
+import bg.softuni.mobilele.models.enums.Role;
 import bg.softuni.mobilele.repositories.UserRepository;
 import bg.softuni.mobilele.services.MobileleUserDetailsService;
 import org.modelmapper.ModelMapper;
@@ -26,6 +27,7 @@ public class AppConfig {
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/", "/login", "/register").permitAll()
+                .antMatchers("/admin").hasRole(Role.ADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()
