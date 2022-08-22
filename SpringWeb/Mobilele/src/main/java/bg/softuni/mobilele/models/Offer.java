@@ -36,6 +36,10 @@ public class Offer extends BaseEntity{
     @ManyToOne
     private User seller;
 
+    public Offer() {
+        this.created = LocalDateTime.now();
+    }
+
     public String getDescription() {
         return description;
     }

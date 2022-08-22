@@ -5,6 +5,7 @@ import bg.softuni.mobilele.models.Offer;
 import bg.softuni.mobilele.models.User;
 import bg.softuni.mobilele.models.dtos.AddOfferDto;
 import bg.softuni.mobilele.models.dtos.AllOfferDto;
+import bg.softuni.mobilele.models.dtos.OfferDetailsDto;
 import bg.softuni.mobilele.repositories.ModelRepository;
 import bg.softuni.mobilele.repositories.OfferRepository;
 import bg.softuni.mobilele.repositories.UserRepository;
@@ -46,5 +47,10 @@ public class OfferService {
 
     public List<AllOfferDto> findAllOfferDtos() {
         return offerRepository.findAll().stream().map(AllOfferDto::new).collect(Collectors.toList());
+    }
+
+    public OfferDetailsDto findOfferDetailsDto(long id) {
+        Offer offer = offerRepository.findById(id).orElseThrow();
+        return new OfferDetailsDto(offer);
     }
 }
