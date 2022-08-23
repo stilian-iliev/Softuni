@@ -35,7 +35,7 @@
                     <div class="card-text"><span>• Seller - <span th:text="*{seller}"></span></span></div>
                 </li>
             </ul>
-            <div class="card-body">
+            <div class="card-body" th:if="${isOwner}">
                 <a class="card-link" th:href="@{/offers/{id}/update(id = *{id})}">Update</a>
                 <a class="card-link" href="/">Delete</a>
             </div>

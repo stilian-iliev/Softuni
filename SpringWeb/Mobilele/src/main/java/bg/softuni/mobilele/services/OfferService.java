@@ -48,11 +48,12 @@ public class OfferService {
         offerRepository.save(offer);
     }
 
-    public boolean isOwner(String userName, Long offerId) {
+    public boolean isOwner(UserDetails userDetails, Long offerId) {
+        if (userDetails == null) return  false;
 
         boolean isOwner = offerRepository.
                 findById(offerId).
-                filter(o -> o.getSeller().getUsername().equals(userName)).
+                filter(o -> o.getSeller().getUsername().equals(userDetails.getUsername())).
                 isPresent();
 
         if (isOwner) {
@@ -60,7 +61,7 @@ public class OfferService {
         }
 
         return userRepository.
-                findByUsername(userName).
+                findByUsername(userDetails.getUsername()).
                 filter(u -> u.getRole().stream().anyMatch(r -> r.getRole().equals(Role.ADMIN))).
                 isPresent();
     }

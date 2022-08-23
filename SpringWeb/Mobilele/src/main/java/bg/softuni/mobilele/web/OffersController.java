@@ -61,13 +61,15 @@ public class OffersController {
     }
 
     @GetMapping("/{id}")
-    public String getDetails(@PathVariable long id, Model model) {
+    public String getDetails(@PathVariable long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        model.addAttribute("isOwner", offerService.isOwner(userDetails, id));
         model.addAttribute("offer", offerService.findOfferDetailsDto(id));
         return "details";
     }
 
     @GetMapping("/{id}/update")
-    public String getUpdate(@PathVariable long id, Model model) {
+    @PreAuthorize("@offerService.isOwner(#userDetails, #id)")
+    public String getUpdate(@PathVariable long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         Offer offerById = offerService.findOfferById(id);
         if (!model.containsAttribute("addOfferDto"))
             model.addAttribute("addOfferDto", new AddOfferDto(offerById));
@@ -76,7 +78,7 @@ public class OffersController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("@offerService.isOwner(#principal.name, #id)")
+    @PreAuthorize("@offerService.isOwner(#userDetails, #id)")
     public String updateOffer(@PathVariable long id, @Valid AddOfferDto addOfferDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("addOfferDto", addOfferDto);
