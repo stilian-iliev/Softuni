@@ -4,6 +4,7 @@ import bg.softuni.mobilele.models.dtos.AddOfferDto;
 import bg.softuni.mobilele.models.dtos.BrandDto;
 import bg.softuni.mobilele.services.BrandService;
 import bg.softuni.mobilele.services.OfferService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -64,5 +65,18 @@ public class OffersController {
     public String getDetails(@PathVariable long id, Model model) {
         model.addAttribute("offer", offerService.findOfferDetailsDto(id));
         return "details";
+    }
+
+    @GetMapping("/{id}/update")
+    public String getUpdate(@PathVariable long id, Model model) {
+        model.addAttribute("offer", offerService.findOfferDetailsDto(id));
+        return "update";
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("@offerService.isOwner(#principal.name, #id)")
+    public String updateOffer(@PathVariable long id) {
+        System.out.println("dosth");
+        return "redirect:/details/" + id;
     }
 }

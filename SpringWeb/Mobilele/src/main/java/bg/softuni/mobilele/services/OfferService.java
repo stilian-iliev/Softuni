@@ -6,6 +6,7 @@ import bg.softuni.mobilele.models.User;
 import bg.softuni.mobilele.models.dtos.AddOfferDto;
 import bg.softuni.mobilele.models.dtos.AllOfferDto;
 import bg.softuni.mobilele.models.dtos.OfferDetailsDto;
+import bg.softuni.mobilele.models.enums.Role;
 import bg.softuni.mobilele.repositories.ModelRepository;
 import bg.softuni.mobilele.repositories.OfferRepository;
 import bg.softuni.mobilele.repositories.UserRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,6 +47,23 @@ public class OfferService {
         offerRepository.save(offer);
     }
 
+    public boolean isOwner(String userName, Long offerId) {
+
+        boolean isOwner = offerRepository.
+                findById(offerId).
+                filter(o -> o.getSeller().getUsername().equals(userName)).
+                isPresent();
+
+        if (isOwner) {
+            return true;
+        }
+
+        return userRepository.
+                findByUsername(userName).
+                filter(u -> u.getRole().stream().anyMatch(r -> r.getRole().equals(Role.ADMIN))).
+                isPresent();
+    }
+
     public List<AllOfferDto> findAllOfferDtos() {
         return offerRepository.findAll().stream().map(AllOfferDto::new).collect(Collectors.toList());
     }
@@ -53,4 +72,6 @@ public class OfferService {
         Offer offer = offerRepository.findById(id).orElseThrow();
         return new OfferDetailsDto(offer);
     }
+
+
 }

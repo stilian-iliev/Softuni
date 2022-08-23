@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class OfferDetailsDto {
+    private long id;
     private String brand;
     private String model;
     private int year;
@@ -18,6 +19,7 @@ public class OfferDetailsDto {
     private LocalDateTime created;
 
     public OfferDetailsDto(Offer offer) {
+        this.id = offer.getId();
         this.brand = offer.getModel().getBrand().getName();
         this.model = offer.getModel().getName();
         this.year = offer.getYear();
@@ -28,6 +30,10 @@ public class OfferDetailsDto {
         this.seller = offer.getSeller().getFirstName() + ' ' + offer.getSeller().getLastName();
         this.imageUrl = offer.getImageUrl();
         this.created = offer.getCreated();
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getBrand() {
