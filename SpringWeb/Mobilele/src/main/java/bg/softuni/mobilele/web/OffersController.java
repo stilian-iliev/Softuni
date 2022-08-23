@@ -1,5 +1,6 @@
 package bg.softuni.mobilele.web;
 
+import bg.softuni.mobilele.models.Offer;
 import bg.softuni.mobilele.models.dtos.AddOfferDto;
 import bg.softuni.mobilele.models.dtos.BrandDto;
 import bg.softuni.mobilele.services.BrandService;
@@ -69,7 +70,9 @@ public class OffersController {
 
     @GetMapping("/{id}/update")
     public String getUpdate(@PathVariable long id, Model model) {
-        model.addAttribute("offer", offerService.findOfferDetailsDto(id));
+        Offer offerById = offerService.findOfferById(id);
+        model.addAttribute("addOfferDto", new AddOfferDto(offerById));
+        model.addAttribute("id", id);
         return "update";
     }
 
@@ -77,6 +80,6 @@ public class OffersController {
     @PreAuthorize("@offerService.isOwner(#principal.name, #id)")
     public String updateOffer(@PathVariable long id) {
         System.out.println("dosth");
-        return "redirect:/details/" + id;
+        return "redirect:/offers/" + id;
     }
 }

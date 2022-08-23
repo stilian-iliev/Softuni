@@ -1,6 +1,7 @@
 package bg.softuni.mobilele.models.dtos;
 
 import bg.softuni.mobilele.models.Model;
+import bg.softuni.mobilele.models.Offer;
 import bg.softuni.mobilele.models.enums.Engine;
 import bg.softuni.mobilele.models.enums.Transmission;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
 
 public class AddOfferDto {
     @NotBlank
@@ -17,7 +19,7 @@ public class AddOfferDto {
 
     @Positive
     @NotNull
-    private int price;
+    private BigDecimal price;
 
     @Min(1900)
     @NotNull
@@ -35,6 +37,20 @@ public class AddOfferDto {
 
     @NotBlank
     private String description;
+
+    public AddOfferDto() {
+    }
+
+    public AddOfferDto(Offer offer  ) {
+        this.model = offer.getModel().getName();
+        this.engine = offer.getEngine();
+        this.price = offer.getPrice();
+        this.year = offer.getYear();
+        this.mileage = offer.getMileage();
+        this.transmission = offer.getTransmission();
+        this.imageUrl = offer.getImageUrl();
+        this.description = offer.getDescription();
+    }
 
     public String getModel() {
         return model;
@@ -76,11 +92,11 @@ public class AddOfferDto {
         this.imageUrl = imageUrl;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

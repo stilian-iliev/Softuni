@@ -74,4 +74,7 @@ public class OfferService {
     }
 
 
+    public Offer findOfferById(long id) {
+        return offerRepository.findById(id).orElseThrow();
+    }
 }
