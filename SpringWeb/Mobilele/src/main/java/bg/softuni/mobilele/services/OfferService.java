@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -76,5 +77,23 @@ public class OfferService {
 
     public Offer findOfferById(long id) {
         return offerRepository.findById(id).orElseThrow();
+    }
+
+    public void updateOffer(long id, AddOfferDto addOfferDto) {
+        Offer offer = offerRepository.findById(id).orElseThrow();
+
+        offer.setEngine(addOfferDto.getEngine());
+        offer.setDescription(addOfferDto.getDescription());
+        offer.setImageUrl(addOfferDto.getImageUrl());
+        offer.setMileage(addOfferDto.getMileage());
+        offer.setPrice(addOfferDto.getPrice());
+        offer.setTransmission(addOfferDto.getTransmission());
+        offer.setYear(addOfferDto.getYear());
+
+        Model model = modelRepository.findByName(addOfferDto.getModel()).orElseThrow();
+        offer.setModel(model);
+
+        offer.setModified(LocalDateTime.now());
+        offerRepository.save(offer);
     }
 }

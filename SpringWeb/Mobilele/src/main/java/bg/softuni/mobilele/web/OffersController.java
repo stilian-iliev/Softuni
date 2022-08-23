@@ -28,10 +28,6 @@ public class OffersController {
         this.offerService = offerService;
     }
 
-    @ModelAttribute("addOfferDto")
-    public AddOfferDto addOfferDto() {
-        return new AddOfferDto();
-    }
 
     @ModelAttribute("brandList")
     public List<BrandDto> brandList() {
@@ -39,7 +35,9 @@ public class OffersController {
     }
 
     @GetMapping("/add")
-    public String getAdd() {
+    public String getAdd(Model model) {
+        if (!model.containsAttribute("addOfferDto"))
+            model.addAttribute("addOfferDto", new AddOfferDto());
         return "offer-add";
     }
 
@@ -71,15 +69,21 @@ public class OffersController {
     @GetMapping("/{id}/update")
     public String getUpdate(@PathVariable long id, Model model) {
         Offer offerById = offerService.findOfferById(id);
-        model.addAttribute("addOfferDto", new AddOfferDto(offerById));
+        if (!model.containsAttribute("addOfferDto"))
+            model.addAttribute("addOfferDto", new AddOfferDto(offerById));
         model.addAttribute("id", id);
         return "update";
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("@offerService.isOwner(#principal.name, #id)")
-    public String updateOffer(@PathVariable long id) {
-        System.out.println("dosth");
+    public String updateOffer(@PathVariable long id, @Valid AddOfferDto addOfferDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("addOfferDto", addOfferDto);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addOfferDto", bindingResult);
+            return "redirect:/offers/" + id + "/update";
+        }
+        offerService.updateOffer(id, addOfferDto);
         return "redirect:/offers/" + id;
     }
 }

@@ -38,6 +38,7 @@ public class Offer extends BaseEntity{
 
     public Offer() {
         this.created = LocalDateTime.now();
+        this.modified = LocalDateTime.now();
     }
 
     public String getDescription() {
