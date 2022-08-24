@@ -93,6 +93,12 @@ public class OffersController {
     @PreAuthorize("@offerService.isOwner(#userDetails, #id)")
     public String deleteOffer(@PathVariable long id, @AuthenticationPrincipal UserDetails userDetails) {
         offerService.deleteOffer(id);
-        return "redirect:/";
+        return "redirect:/offers/all";
+    }
+
+    @GetMapping("/search")
+    public String getSearch(Model model) {
+        model.addAttribute("offers", offerService.findAllOfferDtos());
+        return "search";
     }
 }
