@@ -97,4 +97,8 @@ public class OfferService {
         offer.setModified(LocalDateTime.now());
         offerRepository.save(offer);
     }
+
+    public void deleteOffer(long id) {
+        offerRepository.deleteById(id);
+    }
 }

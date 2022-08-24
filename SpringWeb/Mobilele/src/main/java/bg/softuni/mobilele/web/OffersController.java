@@ -88,4 +88,11 @@ public class OffersController {
         offerService.updateOffer(id, addOfferDto);
         return "redirect:/offers/" + id;
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("@offerService.isOwner(#userDetails, #id)")
+    public String deleteOffer(@PathVariable long id, @AuthenticationPrincipal UserDetails userDetails) {
+        offerService.deleteOffer(id);
+        return "redirect:/";
+    }
 }
