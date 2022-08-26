@@ -42,6 +42,25 @@ xmlns:th="">
             </div>
 
         </div>
+        <nav class="d-flex justify-content-center my-3" aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/offers/all(size=${offers.getSize()},page=0)}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">First</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" th:if="${offers.hasPrevious()}" th:href="@{/offers/all(size=${offers.getSize()},page=${offers.getNumber() - 1})}" th:text="${offers.getNumber()}">1</a></li>
+                <li class="page-item"><a class="page-link" th:href="@{/offers/all(size=${offers.getSize()},page=${offers.getNumber()})}" th:text="${offers.getNumber() + 1}">2</a></li>
+                <li class="page-item"><a class="page-link" th:if="${offers.hasNext()}" th:href="@{/offers/all(size=${offers.getSize()},page=${offers.getNumber() + 1})}" th:text="${offers.getNumber() + 2}">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/offers/all(size=${offers.getSize()},page=${offers.getTotalPages() - 1})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Last</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
     <div>

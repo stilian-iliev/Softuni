@@ -2,9 +2,14 @@ package bg.softuni.mobilele.web;
 
 import bg.softuni.mobilele.models.Offer;
 import bg.softuni.mobilele.models.dtos.AddOfferDto;
+import bg.softuni.mobilele.models.dtos.AllOfferDto;
 import bg.softuni.mobilele.models.dtos.BrandDto;
 import bg.softuni.mobilele.services.BrandService;
 import bg.softuni.mobilele.services.OfferService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -55,8 +60,13 @@ public class OffersController {
     }
 
     @GetMapping("/all")
-    public String getAll(Model model) {
-        model.addAttribute("offers", offerService.findAllOfferDtos());
+    public String getAll(Model model, @PageableDefault(
+            sort = "price",
+            direction = Sort.Direction.ASC,
+            page = 0,
+            size = 20) Pageable pageable) {
+        model.addAttribute("offers", offerService.findAllOfferDtos(pageable));
+        Page<AllOfferDto> allOfferDtos = offerService.findAllOfferDtos(pageable);
         return "offers";
     }
 
@@ -96,9 +106,4 @@ public class OffersController {
         return "redirect:/offers/all";
     }
 
-    @GetMapping("/search")
-    public String getSearch(Model model) {
-        model.addAttribute("offers", offerService.findAllOfferDtos());
-        return "search";
-    }
 }

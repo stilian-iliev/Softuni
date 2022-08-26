@@ -11,6 +11,8 @@ import bg.softuni.mobilele.repositories.ModelRepository;
 import bg.softuni.mobilele.repositories.OfferRepository;
 import bg.softuni.mobilele.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -66,8 +68,8 @@ public class OfferService {
                 isPresent();
     }
 
-    public List<AllOfferDto> findAllOfferDtos() {
-        return offerRepository.findAll().stream().map(AllOfferDto::new).collect(Collectors.toList());
+    public Page<AllOfferDto> findAllOfferDtos(Pageable pageable) {
+        return offerRepository.findAll(pageable).map(AllOfferDto::new);
     }
 
     public OfferDetailsDto findOfferDetailsDto(long id) {
