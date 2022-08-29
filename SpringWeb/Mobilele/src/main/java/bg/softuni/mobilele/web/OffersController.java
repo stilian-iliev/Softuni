@@ -4,6 +4,7 @@ import bg.softuni.mobilele.models.Offer;
 import bg.softuni.mobilele.models.dtos.AddOfferDto;
 import bg.softuni.mobilele.models.dtos.AllOfferDto;
 import bg.softuni.mobilele.models.dtos.BrandDto;
+import bg.softuni.mobilele.models.dtos.SearchOfferDto;
 import bg.softuni.mobilele.services.BrandService;
 import bg.softuni.mobilele.services.OfferService;
 import org.springframework.data.domain.Page;
@@ -64,7 +65,9 @@ public class OffersController {
             sort = "price",
             direction = Sort.Direction.ASC,
             page = 0,
-            size = 20) Pageable pageable) {
+            size = 20) Pageable pageable,
+                         SearchOfferDto searchOfferDto) {
+
         model.addAttribute("offers", offerService.findAllOfferDtos(pageable));
         Page<AllOfferDto> allOfferDtos = offerService.findAllOfferDtos(pageable);
         return "offers";
