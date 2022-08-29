@@ -67,9 +67,12 @@ public class OffersController {
             page = 0,
             size = 20) Pageable pageable,
                          SearchOfferDto searchOfferDto) {
+        if (!searchOfferDto.isEmpty()) {
+            model.addAttribute("offers", offerService.findAllOfferDtos(pageable, searchOfferDto));
+        } else {
+            model.addAttribute("offers", offerService.findAllOfferDtos(pageable));
+        }
 
-        model.addAttribute("offers", offerService.findAllOfferDtos(pageable));
-        Page<AllOfferDto> allOfferDtos = offerService.findAllOfferDtos(pageable);
         return "offers";
     }
 

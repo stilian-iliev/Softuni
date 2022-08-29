@@ -28,4 +28,8 @@ public class SearchOfferDto {
     public Integer getMaxPrice() {
         return maxPrice;
     }
+
+    public boolean isEmpty() {
+        return (model == null || model.isEmpty()) && minPrice == null && maxPrice == null;
+    }
 }
